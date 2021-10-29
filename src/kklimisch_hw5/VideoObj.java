@@ -28,35 +28,38 @@ final class VideoObj implements Comparable<VideoObj> {
 	 * Title and director are "trimmed" to remove leading and final space.
 	 * @throws IllegalArgumentException if any object invariant is violated.
 	 */
-	VideoObj(String title, int year, String director) {
-		// TODO: implement VideoObj constructor
-		this.title = null;
-		this.year = 0;
-		this.director = null;	  
+	VideoObj(String title, int year, String director) throws IllegalArgumentException {
+
+		// Check invariants and throw Illegal Argument Exception if any object invariant
+		// is violated.
+		if ( (title == null) || (title.trim().isEmpty() ) || (year < 1800) || (year > 5000) ||
+				(director == null) || (director.trim().isEmpty() ) ) {
+			throw new IllegalArgumentException();
+		}
+		this.title = title.trim();
+		this.year = year;
+		this.director = director.trim();
 	}
 
 	/**
 	 * Return the value of the attribute.
 	 */
 	public String director() {
-		// TODO: implement director method
-		return "director";
+		return director;
 	}
 
 	/**
 	 * Return the value of the attribute.
 	 */
 	public String title() {
-		// TODO: implement title method
-		return "title";
+		return title;
 	}
 
 	/**
 	 * Return the value of the attribute.
 	 */
 	public int year() {
-		// TODO: implement year method
-		return -1;
+		return year;
 	}
 
 	/**
@@ -66,31 +69,60 @@ final class VideoObj implements Comparable<VideoObj> {
 	 */
 	@Override
 	public boolean equals(Object thatObject) {
-		// TODO: implement equals method
-		return false;
+		// Use == operator to check if thatObject argument is a reference
+		// to this object. If it is, return true.
+		if (thatObject == this) {
+			return true;
+		}
+
+		// Use the instanceof operator to check if thatObject argument has the
+		// correct type. If it doesn't, return false.
+		if (!(thatObject instanceof VideoObj) ) {
+			return false;
+		}
+
+		// Cast thatObject argument to the correct VideoObj type.
+		VideoObj vo = (VideoObj)thatObject;
+
+		// Check if thatObject fields match the corresponding fields in
+		// this object. Use case-insensitive comparisons for String fields
+		// title and director.
+		return vo.title.equalsIgnoreCase(title) && vo.year == year &&
+				vo.director.equalsIgnoreCase(director);
 	}
 
 	/**
 	 * Return a hash code value for this object using the algorithm from Bloch:
 	 * fields are added in the following order: title, year, director.
+	 *
+	 * Send String fields title and director to upper case before computing
+	 * their hash codes.
 	 */
 	@Override
 	public int hashCode() {
-		// TODO: implement hashCode method
-		return -1;
+		int result = title.toUpperCase().hashCode();
+		result = 31 * result + Integer.hashCode(year);
+		result = 31 * result + director.toUpperCase().hashCode();
+		return result;
 	}
 
 	/**
 	 * Compares the attributes of this object with those of thatObject, in
 	 * the following order: title, year, director.
-	 * @param that the VideoObj to be compared.
+	 * @param thatObject the VideoObj to be compared.
 	 * @return a negative integer, zero, or a positive integer as this
 	 *  object is less than, equal to, or greater than that object.
 	 */
 	@Override
 	public int compareTo(VideoObj thatObject) {
-		// TODO: implement compareTo method
-		return -1;
+		int result = title.compareToIgnoreCase(thatObject.title);
+		if (result == 0) {
+			result = Integer.compare(year, thatObject.year);
+			if (result == 0) {
+				result = director.compareToIgnoreCase(thatObject.director);
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -99,8 +131,7 @@ final class VideoObj implements Comparable<VideoObj> {
 	 */
 	@Override
 	public String toString() {
-		// TODO: implement toString method
-		return "El Mariachi (1996) : Rodriguez";
+		return "\"" + title + " (" + year + ") " + director + "\"";
 	}
 
 }
