@@ -6,6 +6,25 @@ import org.junit.Test;
 
 public class VideoObjTest {
 
+	/**
+	 * Testing the constructor and attribute fields.
+	 *
+	 * For the String object reference fields director and title:
+	 * ~Use assertSame to verify that when a new instance of the videoObj
+	 * class is created using the parameterized constructor, the new instance
+	 * fields for director and title refer to the same String objects as do the
+	 * input arguments for title and director.
+	 * ~Use assertEquals to verify that the parameterized constructor successfully
+	 * initializes the fields for director and title to be equal to the String objects
+	 * that were passed in, so that when separate variables are set equal to
+	 * equivalent Strings, the instance fields and the separate variables are equal to
+	 * each other.
+	 *
+	 * For the integral primitive field year:
+	 * ~Use assertEquals to verify that when a new instance of the videoObj class is created
+	 * using the parameterized constructor, the new instance field year is equal to the
+	 * value that was passed in.
+	 */
 	@Test
 	public void testConstructorAndAttributes() {
 		String title1 = "XX";
@@ -24,6 +43,18 @@ public class VideoObjTest {
 		assertEquals(director1, v2.director());
 	}
 
+	/**
+	 * Testing that the constructor upholds the invariants for
+	 * the field year.
+	 *
+	 * Invariants for year: Must greater than 1800 and less than 5000.
+	 *
+	 * Tests:
+	 * ~Verify that the constructor throws an Illegal Argument Exception
+	 * if an input value of 1800 or 5000 is passed in for year.
+	 * ~Test edge cases: Verify that no exception is thrown if an input value
+	 * of 1801 or 4999 is passed in for year.
+	 */
 	@Test
 	public void testConstructorExceptionYear() {
 		try {
@@ -42,6 +73,17 @@ public class VideoObjTest {
 		}
 	}
 
+	/**
+	 * Testing that the constructor upholds the invariants for field title.
+	 *
+	 * Invariants: Title is not null, an empty String, or a String consisting
+	 * of only spaces.
+	 *
+	 * Tests:
+	 * ~Verify that the constructor throws an Illegal Argument Exception when
+	 * the String passed in for title is null, an empty String, or a String
+	 * consisting of only spaces.
+	 */
 	@Test
 	public void testConstructorExceptionTitle() {
 		try {
@@ -58,22 +100,115 @@ public class VideoObjTest {
 		} catch (IllegalArgumentException e) { }
 	}
 
+
+	/**
+	 * Testing that the constructor upholds the invariants for field director.
+	 *
+	 * Invariants: Director is not null, an empty String, or a String consisting
+	 * of only spaces.
+	 *
+	 * Tests:
+	 * ~Verify that the constructor throws an Illegal Argument Exception when
+	 * the String passed in for director is null, an empty String, or a String
+	 * consisting of only spaces.
+	 */
 	@Test
 	public void testConstructorExceptionDirector() {
-		// TODO: complete testConstructorExceptionDirector test
+		try {
+			new VideoObj("Y", 2002, null);
+			fail();
+		} catch (IllegalArgumentException e) { }
+		try {
+			new VideoObj("Y", 2002, "");
+			fail();
+		} catch (IllegalArgumentException e) { }
+		try {
+			new VideoObj("Y", 2002, " ");
+			fail();
+		} catch (IllegalArgumentException e) { }
 	}
 
+	/**
+	 * Testing for hashCode() method. Verify that hashCode() method produces the
+	 * expected results when called on different videoObj instances.
+	 *
+	 * Note for grader: I updated the expected hashValues to reflect that my hashCode()
+	 * method pushes the String for field and director to upper case before computing
+	 * their hash codes.
+	 */
 	@Test
 	public void testHashCode() {
 		assertEquals
-		(-1869722747, new VideoObj("None", 2009, "Zebra").hashCode());
+		(-1901244571, new VideoObj("None", 2009, "Zebra").hashCode());
 		assertEquals
-		(2057189520, new VideoObj("Blah", 1954, "Cante").hashCode());
+		(2025667696, new VideoObj("Blah", 1954, "Cante").hashCode());
 	}
 
+	/**
+	 * Testing for overridden equals() method. Verify that equals method is reflexive,
+	 * symmetric, transitive, consistent, and returns false when equals(null) is called
+	 * on a non-null videoObj.
+	 */
 	@Test
 	public void testEquals() {
-		// TODO: complete testEquals test
+		// a, b, and c have the same values for all fields.
+		VideoObj a = new VideoObj("Transformers", 2011, "Bay");
+		VideoObj b = new VideoObj("Transformers", 2011, "Bay");
+		VideoObj c =  new VideoObj("Transformers", 2011, "Bay");
+
+		// d has a different value for title than a, b, and c.
+		VideoObj d = new VideoObj("Transform", 2011, "Bay");
+
+		// e has a different value for year than a, b, and c.
+		VideoObj e =  new VideoObj("Transformers", 2010, "Bay");
+
+		// f has a different value for year than a, b, and c.
+		VideoObj f =  new VideoObj("Transformers", 2010, "LaBeouf");
+
+		// Verifying equals() is reflexive.
+		assertTrue(a.equals(a));
+		assertTrue(b.equals(b));
+
+		// Verifying equals() is symmetric.
+		assertTrue(a.equals(b));
+		assertTrue(b.equals(a));
+
+		assertFalse(a.equals(d));
+		assertFalse(d.equals(a));
+
+		// Verifying equals() is transitive. From the testing above,
+		// we know a.equals(b) and a.equals(d) returns false.
+		assertTrue(b.equals(c));
+		assertTrue(c.equals(a));
+		assertFalse(c.equals(d));
+
+		// Verifying consistency.
+		assertTrue(c.equals(a));
+		assertTrue(c.equals(a));
+		assertTrue(c.equals(a));
+		assertTrue(c.equals(a));
+		assertTrue(c.equals(a));
+		assertTrue(c.equals(a));
+		assertTrue(c.equals(a));
+
+		assertFalse(a.equals(f));
+		assertFalse(a.equals(f));
+		assertFalse(a.equals(f));
+		assertFalse(a.equals(f));
+		assertFalse(a.equals(f));
+		assertFalse(a.equals(f));
+		assertFalse(a.equals(f));
+
+		// Verifying equals returns false when equals(null) is called
+		// on a non-null videoObj object.
+		assertFalse(a.equals(null));
+
+		// Verifying equals() can detect lack of equality in year field.
+		// Equal(s) verified to detect lack of equality in director and
+		// title fields by testing VideoObj a for equality with VideoObj d
+		// and VideoObj f above.
+		assertFalse(a.equals(e));
+
 	}
 
 	@Test

@@ -32,7 +32,7 @@ final class VideoObj implements Comparable<VideoObj> {
 
 		// Check invariants and throw Illegal Argument Exception if any object invariant
 		// is violated.
-		if ( (title == null) || (title.trim().isEmpty() ) || (year < 1800) || (year > 5000) ||
+		if ( (title == null) || (title.trim().isEmpty() ) || (year < 1801) || (year > 4999) ||
 				(director == null) || (director.trim().isEmpty() ) ) {
 			throw new IllegalArgumentException();
 		}
@@ -131,7 +131,7 @@ final class VideoObj implements Comparable<VideoObj> {
 	 */
 	@Override
 	public String toString() {
-		return "\"" + title + " (" + year + ") " + director + "\"";
+		return title + " (" + year + ") : " + director;
 	}
 
 }
