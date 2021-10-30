@@ -147,7 +147,8 @@ public class VideoObjTest {
 	/**
 	 * Testing for overridden equals() method. Verify that equals method is reflexive,
 	 * symmetric, transitive, consistent, and returns false when equals(null) is called
-	 * on a non-null videoObj.
+	 * on a non-null videoObj. Also verify that equals method can detect lack of equality
+	 * in all VideoObj fields.
 	 */
 	@Test
 	public void testEquals() {
@@ -176,10 +177,11 @@ public class VideoObjTest {
 		assertFalse(a.equals(d));
 		assertFalse(d.equals(a));
 
-		// Verifying equals() is transitive. From the testing above,
-		// we know a.equals(b) and a.equals(d) returns false.
+		// Verifying equals() is transitive:
+		// From testing above, we know a.equals(b) returns true.
 		assertTrue(b.equals(c));
 		assertTrue(c.equals(a));
+		// From testing above, we know a.equals(d) returns false.
 		assertFalse(c.equals(d));
 
 		// Verifying consistency.
@@ -211,9 +213,59 @@ public class VideoObjTest {
 
 	}
 
+	/**
+	 * Testing for compareTo method. Verify that the following conditions
+	 * of the general contract of the compareTo method are met:
+	 * 1) x.compareTo(y) == -1 * (y.compareTo(x)), for all x and y.
+	 * 2) compareTo relation is transitive.
+	 * 3) x.compareTo(y) == 0 implies that
+	 *    x.compareTo(z) == y.compareTo(z), for all z.
+	 * 4) (x.compareTo(y) == 0) == (x.equals(y)).
+	 *
+	 * Also verify that the compareTo method compares instances of VideoObj
+	 * by comparing fields in the following order: title, year, director.
+	 * Title and director are ordered alphabetically, so that a videoObj instance
+	 * with a title starting with "B" is greater than a videoObj instance with a
+	 * title starting with "A." Year is ordered by integer value, so that
+	 * higher/more recent years are greater than lower/less recent years.
+	 */
 	@Test
 	public void testCompareTo() {
-		// TODO: complete testCompareTo test
+		VideoObj a = new VideoObj("Avator", 2009, "Cameron");
+		VideoObj b = new VideoObj("Board", 2006, "Avery");
+		VideoObj c = new VideoObj("Avator", 2008, "Cameron");
+		VideoObj d = new VideoObj("Avator", 2009, "Daniel");
+		VideoObj e = new VideoObj("Avator", 2009, "Daniel");
+
+		// Verifying that compareTo compares instances of VideoObj by comparing
+		// fields in the following order: title, year, director.
+		assertEquals(-1, a.compareTo(b));
+		assertEquals(1, b.compareTo(c));
+		assertEquals (1, a.compareTo(c));
+		assertEquals (-1, a.compareTo(d));
+		assertEquals(0, d.compareTo(e));
+
+		// Verifying that x.compareTo(y) == -1 * y.compareTo(x).
+		assertEquals(a.compareTo(b), -1 * b.compareTo(a) );
+		assertEquals(c.compareTo(d), -1 * d.compareTo(c) );
+
+		// Verifying compareTo relation is transitive:
+		assertEquals(1, a.compareTo(c));
+		assertEquals(1, b.compareTo(a));
+		assertEquals(1, b.compareTo(c));
+		assertEquals(-1, a.compareTo(e));
+		assertEquals (-1, e.compareTo(b));
+		assertEquals(-1, a.compareTo(b));
+
+		// Verifying that x.compareTo(y) == 0 means that
+		// sgn(x.compareTo(z)) == sgn(y.compareTo(z)), for all z.
+		// From testing above, we know that d.compareTo(e) == 0.
+		assertEquals(d.compareTo(b), e.compareTo(b));
+		assertEquals(d.compareTo(c), e.compareTo(c));
+
+		// Verifying that (x.compareTo(y) == 0) == (x.equals(y)).
+		// From above, we know that d.compareTo(e) == 0;
+		assertTrue(d.equals(e));
 	}
 
 	@Test
