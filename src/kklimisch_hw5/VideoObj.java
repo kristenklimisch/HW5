@@ -42,30 +42,38 @@ final class VideoObj implements Comparable<VideoObj> {
 	}
 
 	/**
-	 * Return the value of the attribute.
+	 * Method to return the VideoObj object's director field.
+	 *
+	 * @return the director
 	 */
 	public String director() {
 		return director;
 	}
 
 	/**
-	 * Return the value of the attribute.
+	 * Method to return the VideoObj object's title field.
+	 *
+	 * @return the title
 	 */
 	public String title() {
 		return title;
 	}
 
 	/**
-	 * Return the value of the attribute.
+	 * Method to return the VideoObj's year field.
+	 *
+	 * @return the year
 	 */
 	public int year() {
 		return year;
 	}
 
 	/**
-	 * Compare the attributes of this object with those of thatObject.
+	 * Equals() method. Compares all fields of this VideoObj object with those of thatObject.
 	 * @param thatObject the Object to be compared.
-	 * @return deep equality test between this and thatObject.
+	 * @return deep equality test between this and thatObject: returns true if this object and
+	 *         thatObject are the same object or if this object and thatObject have equivalent
+	 *         values for all fields. Else returns false.
 	 */
 	@Override
 	public boolean equals(Object thatObject) {
@@ -97,6 +105,8 @@ final class VideoObj implements Comparable<VideoObj> {
 	 *
 	 * Send String fields title and director to upper case before computing
 	 * their hash codes.
+	 *
+	 * @return the computed hash code for the object
 	 */
 	@Override
 	public int hashCode() {
@@ -128,6 +138,8 @@ final class VideoObj implements Comparable<VideoObj> {
 	/**
 	 * Return a string representation of the object in the following format:
 	 * <code>"title (year) : director"</code>.
+	 *
+	 * @return String representation of the VideoObj object.
 	 */
 	@Override
 	public String toString() {

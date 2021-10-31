@@ -43,6 +43,8 @@ public class InventorySetTest {
 	@Test
 	public void testCheckOutCheckIn() {
 		// TODO: complete testCheckOutCheckIn test
+
+
 	}
 
 	@Test
