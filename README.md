@@ -9,4 +9,4 @@ feel like I'm understanding everything pretty well, and I'm
 learning strategies to become more efficient as I go.
 
 This was a very useful assignment. I feel much more comfortable
-with Junit testing and overridding equals() and hashCode() now. 
+with Junit testing and overriding equals() and hashCode() now. 
