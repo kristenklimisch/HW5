@@ -1,3 +1,8 @@
+/*
+ * Kristen Klimisch
+ * CPSC 5011, Seattle University
+ * This is free and unencumbered software released into the public domain.
+ */
 package kklimisch_hw5;
 
 import static org.junit.Assert.*;
@@ -88,7 +93,6 @@ public class InventorySetTest {
 
 	@Test
 	public void testClear() {
-
 		s.addNumOwned(v1, 3);
 		s.addNumOwned(v2, 1);
 		assertEquals(2, s.size());
@@ -151,8 +155,8 @@ public class InventorySetTest {
 		// Notes on the collection:
 		// The collection now contains copies of the 2 Records in InventorySet s.
 		// The copy Records in collection are different objects than the
-		// Records in Inventory set s, but the copy Records have a pointer to the
-		// same VideoObj objects as do the original Records..
+		// Records in Inventory set s, but each copy Record has a pointer to the
+		// same VideoObj object as does the original Record.
 
 		// Verifying that the collection contains the expected
 		// number of Record objects.
@@ -170,7 +174,7 @@ public class InventorySetTest {
 		// the Records in the collection, invoke their toString() methods,
 		// and store the Strings in a temp ArrayList. I'll then verify
 		// that the temp ArrayList contains the Strings produced when the
-		// toString() method is invoked on the Records in InventorySet s..
+		// toString() method is invoked on the Records in InventorySet s.
 		ArrayList<String> temp = new ArrayList<>();
 		for (Record r : collection) {
 			temp.add(r.toString());

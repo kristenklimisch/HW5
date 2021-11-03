@@ -1,3 +1,8 @@
+/*
+ * Kristen Klimisch
+ * CPSC 5011, Seattle University
+ * This is free and unencumbered software released into the public domain.
+ */
 package kklimisch_hw5;;
 
 import java.util.Map;
@@ -14,6 +19,9 @@ import java.util.ArrayList;
  *   Every key and value in the map is non-<code>null</code>.
  * <p><b>Object Invariant:</b></p>
  *   Each value <code>r</code> is stored under key <code>r.video</code>.
+ *
+ * @author Kristen Klimisch
+ * @version 1.0
  */
 final class InventorySet {
 
@@ -179,6 +187,8 @@ final class InventorySet {
 
 	/**
 	 * Return the contents of the inventory as a string.
+	 *
+	 * @return a String representation of the contents of the inventory.
 	 */
 	@Override
 	public String toString() {
@@ -191,5 +201,4 @@ final class InventorySet {
 		}
 		return buffer.toString();
 	}
-
 }

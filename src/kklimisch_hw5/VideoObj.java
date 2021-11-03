@@ -1,3 +1,8 @@
+/*
+ * Kristen Klimisch
+ * CPSC 5011, Seattle University
+ * This is free and unencumbered software released into the public domain.
+ */
 package kklimisch_hw5;
 
 /**
@@ -11,6 +16,9 @@ package kklimisch_hw5;
  *   Year is greater than 1800, less than 5000.
  * <p><b>Object Invariant:</b></p>
  *   Director is non-null, no leading or final spaces, not empty string.
+ *
+ * @author Kristen Klimisch
+ * @version 1.0
  */
 final class VideoObj implements Comparable<VideoObj> {
 
@@ -24,8 +32,11 @@ final class VideoObj implements Comparable<VideoObj> {
 	private final String director;
 
 	/**
-	 * Initialize all object attributes.
+	 * Constructor. Initialize all object attributes.
 	 * Title and director are "trimmed" to remove leading and final space.
+	 * @param title     The title of the video.
+	 * @param year      The year the video was released.
+	 * @param director  The director of the video.
 	 * @throws IllegalArgumentException if any object invariant is violated.
 	 */
 	VideoObj(String title, int year, String director) throws IllegalArgumentException {

@@ -1,3 +1,8 @@
+/*
+ * Kristen Klimisch
+ * CPSC 5011, Seattle University
+ * This is free and unencumbered software released into the public domain.
+ */
 package kklimisch_hw5;
 
 /**
@@ -44,6 +49,11 @@ final class Record {
 
 	/**
 	 * Return a shallow copy of this record.
+	 * Specifically, this method creates and returns a new Record object,
+	 * but the new Record object has a pointer to the same VideoObj object
+	 * as this record.
+	 *
+	 * @return a shallow copy of the Record.
 	 */
 	public Record copy() {
 		return new Record(video,numOwned,numOut,numRentals);
@@ -52,6 +62,8 @@ final class Record {
 	/**
 	 * Return a string representation of the object in the following format:
 	 * <code>"video [numOwned,numOut,numRentals]"</code>.
+	 *
+	 * @return the String representation of the Record object.
 	 */
 	@Override
 	public String toString() {
