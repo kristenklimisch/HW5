@@ -174,7 +174,7 @@ final class InventorySet {
 	 * <p><b>Postcondition:</b> <code>size() == 0</code></p>
 	 */
 	public void clear() {
-		// TODO: implement clear method
+		data.clear();
 	}
 
 	/**
