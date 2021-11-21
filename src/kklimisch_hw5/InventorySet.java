@@ -52,7 +52,14 @@ final class InventorySet {
 	 */
 	public Record get(VideoObj v) {
 
-		// Get the Record associated with the Video in the InventorySet and invoke the Record's
+		// Got point off b/c method did not return null if Video was not present in Inventory Set.
+		// Added this code and extra comment below accordingly.
+		// Also added corresponding test to InventorySetTest.
+		if (!(data.containsKey(v) ) ) {
+			return null;
+		}
+		// After verifying that the InventorySet contains the Video,
+		// get the Record associated with the Video in the InventorySet and invoke the Record's
 		// copy() method to create a shallow copy of it. Return the copy of the Record.
 		Record r = data.get(v).copy();
 		return r;
@@ -63,10 +70,16 @@ final class InventorySet {
 	 * The Records in the InventorySet are copied and then added to the Array List,
 	 * Neither the underlying collection, nor the actual Records are returned.
 	 *
+	 * This was my original returns. Since the feedback was to declare the
+	 * ArrayList as a collection, I'd update this to say "@returns a Collection..."
 	 * @returns an ArrayList containing copies of all the Records in the InventorySet.
 	 */
 	public Collection<Record> toCollection() {
-		ArrayList<Record> collection = new ArrayList<Record>();
+		// This is what I did in my original code. Feedback was
+		// that ArrayList should be declared as a collection, so I'm
+		// updating the code accordingly.
+		//ArrayList<Record> collection = new ArrayList<Record>();
+		Collection<Record> collection = new ArrayList<Record>();
 		for (Record record : data.values()) {
 			collection.add(record.copy());
 		}
@@ -90,13 +103,21 @@ final class InventorySet {
 	 */
 	public void addNumOwned(VideoObj video, int change) {
 
-		// Throw IllegalArgumentException if video is null or change is zero
-		if(video == null || change == 0) {
-			throw new IllegalArgumentException();
+		// Updated this method in response to assignment feedback:
+		// "Pass message to exception constructors indicating what the error is."
+		// Also, changed the first if statement from if
+		// (video == null || change == 0) to just if (change == 0).
+		// The handling for if data.get(video) == null is below.
+		// Throw IllegalArgumentException if change is zero.
+		if(change == 0) {
+			throw new IllegalArgumentException
+					("Attempting to use 0 for change in videos in inventory");
 		}
+
 
 		// Get Record associated with video from InventorySet.
 		Record record = data.get(video);
+
 
 		// If a Record does not exist for the video in the InventorySet, data.get(video)
 		// will return null. If this occurs and change is positive, create a Record and
@@ -112,13 +133,15 @@ final class InventorySet {
 				data.put(video, record);
 
 			} else {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Video is not in inventory.\n" +
+						"To add video to inventory, change must be > 0.");
 			}
 
 		// Throw IllegalArgumentException if trying to remove more copies
 		// than are currently present in the InventorySet.
 		} else if ((record.numOwned - record.numOut) + change < 0) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Trying to remove more copies than are " +
+						"currently present in inventory.");
 
 		// If change brings the number of copies owned to 0, remove VideoObj - Record pair from
 		// InventorySet.
@@ -143,10 +166,13 @@ final class InventorySet {
 		// Get Record associated with video from InventorySet.
 		Record record = data.get(video);
 
-		// If video has no Record or numOut equals numOwned,
-		// throw IllegalArgumentException.
-		if ( (record == null) || (record.numOwned == record.numOut) ) {
-			throw new IllegalArgumentException();
+		// If video has no Record, throw IllegalArgumentException.
+		if ( (record == null) ) {
+			throw new IllegalArgumentException("There is no record of video in inventory.");
+		}
+
+		if (record.numOwned == record.numOut) {
+			throw new IllegalArgumentException("All copies of video are checked out.");
 		}
 
 		// Increment the numOut for the Record to reflect that
@@ -165,11 +191,15 @@ final class InventorySet {
 		// Get Record associated with video from InventorySet.
 		Record record = data.get(video);
 
-		// If video has no Record or numOut is non-positive
-		// (meaning the Video has not been checked out and thus cannot logically
-		// be checked in), throw IllegalArgumentException.
-		if ( (record == null) || (record.numOut <= 0) ) {
-			throw new IllegalArgumentException();
+		// If video has no Record, throw IllegalArgumentException.
+		if (record == null) {
+			throw new IllegalArgumentException("There is no record of video in inventory.");
+		}
+		// If numOut is non-positive (meaning the Video has not been checked out
+		// and thus cannot logically be checked in),
+		// throw IllegalArgumentException.
+		if ( record.numOut <= 0) {
+			throw new IllegalArgumentException("Attempting to check in video that is not checked out.");
 		}
 
 		// Decrement numOut for the Record to reflect

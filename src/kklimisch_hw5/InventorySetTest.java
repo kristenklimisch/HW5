@@ -140,6 +140,12 @@ public class InventorySetTest {
 		assertEquals(0, s.get(v1).numRentals);
 		assertEquals(1, s.get(v2).numOwned);
 		assertEquals(0, s.get(v2).numOut);
+
+		// Added after assignment submission in response to feedback.
+		// Verifying that get method returns null when video is
+		// not in inventory set.
+		final VideoObj v3 = new VideoObj( "Testing", 2000, "B" );
+		assertEquals(null, s.get(v3));
 	}
 
 	@Test

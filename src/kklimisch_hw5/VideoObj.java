@@ -41,11 +41,19 @@ final class VideoObj implements Comparable<VideoObj> {
 	 */
 	VideoObj(String title, int year, String director) throws IllegalArgumentException {
 
-		// Check invariants and throw Illegal Argument Exception if any object invariant
-		// is violated.
-		if ( (title == null) || (title.trim().isEmpty() ) || (year < 1801) || (year > 4999) ||
-				(director == null) || (director.trim().isEmpty() ) ) {
-			throw new IllegalArgumentException();
+		// Updated after receiving assignment feedback:
+		// "Pass message to exception constructors indicating what the error is."
+		// Instead of checking invariants for all fields in one if statement,
+		// created separate if statements for the 3 fields so I could write
+		// specific exception messages.
+		if ((title == null) || (title.trim().isEmpty() ) ) {
+			throw new IllegalArgumentException("Null value or empty string entered for title");
+		}
+		if ( (year < 1801) || (year > 4999) ) {
+			throw new IllegalArgumentException("Year must be greater than 1800 and less than 5000");
+		}
+		if ( (director == null) || (director.trim().isEmpty() ) ) {
+			throw new IllegalArgumentException("Null value or empty string entered for director");
 		}
 		this.title = title.trim();
 		this.year = year;
